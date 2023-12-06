@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class Message implements Serializable {
 
-    private Integer number;
+    private Integer id;
     private String status;
     private String account;
     private BigDecimal amount;

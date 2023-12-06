@@ -1,18 +1,25 @@
 package com.example.kafka.service;
 
 import com.example.kafka.dto.Message;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.example.kafka.enums.Status;
+import com.example.kafka.util.Utils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EventConsumerService {
+
+    private EventStrategy eventStrategy;
 
     @KafkaListener(topics = "transactions", groupId = "group_id")
     public void listener(String message) {
-        System.out.println("::::::::::: ---   Received message: ------   " + message);
+        Message event = Utils.jsonToMessage(message);
+        eventStrategy.handleMessage(event.getStatus(), event);
+        log.info(":::::::::: ---   Received message: ------   " + message);
+
     }
 }
