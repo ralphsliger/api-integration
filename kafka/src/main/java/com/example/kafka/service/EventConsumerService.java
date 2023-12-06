@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class EventConsumerService {
 
-    private EventStrategy eventStrategy;
+    private final EventStrategy eventStrategy;
 
     @KafkaListener(topics = "transactions", groupId = "group_id")
     public void listener(String message) {
