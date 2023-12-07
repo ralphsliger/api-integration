@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MessagesModule } from './messages/messages.module';
+import { GraphqlModule } from './graphql/graphql.module';
+import { GraphQLModule } from '@nestjs/graphql/dist/graphql.module';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
@@ -14,7 +17,11 @@ import { MessagesModule } from './messages/messages.module';
       autoLoadEntities: true,
       synchronize: true
     }),
-    MessagesModule
+    MessagesModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+    }),
   ],  
 })
 export class AppModule {}
